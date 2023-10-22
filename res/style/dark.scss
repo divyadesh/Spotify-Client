@@ -1,0 +1,246 @@
+// Main background color
+$background-color: #121212;
+// Secondary background color for borders etc.
+$secondary-background-color: #282828;
+// Header background color for list titles etc.
+$header-background-color: #181818;
+// Background color for buttons or other selectable items
+$button-background-color: #333333;
+
+// Background for handle in scrollbars
+$scrollbar-handle-color: #4d4d4d;
+
+// Sidebar background color
+$sidebar-background-color: #000000;
+// Sidebar font color
+$sidebar-foreground-color: #b3b3b3;
+
+// Menu background color
+$menu-background-color: $secondary-background-color;
+// Menu hover
+$menu-hover-background-color: #3e3e3e;
+
+// Input background color for text inputs etc.
+$input-background-color: #3e3e3e;
+// Input foreground color
+$input-foreground-color: #ffffff;
+// Input border colors etc.
+$input-secondary-background-color: #b2b2b2;
+
+// Main font color
+$foreground-color: #f5f5f5;
+// Color of selected items etc.
+$highlight-color: $secondary-background-color;
+// Font color of selected items etc.
+$highlight-foreground-color: $foreground-color;
+// Main Spotify green color
+$theme-color: #1db954;
+// Color for disabled text etc.
+$disabled-color: #aba398;
+
+// Slider background (inactive)
+$slider-background-color: #535353;
+// Slider foreground (active)
+$slider-foreground-color: $sidebar-foreground-color;
+// Slider handle
+$slider-handle-color: #ffffff;
+
+@mixin button-style() {
+	border-style: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+}
+
+@mixin selection-foreground($color) {
+	selection-color: $color;
+
+	&::item::selected {
+		color: $color;
+	}
+}
+
+QWidget {
+	color: $foreground-color;
+
+	selection-background-color: $highlight-color;
+
+	&::item::selected {
+		background-color: $highlight-color;
+	}
+
+	@include selection-foreground($highlight-foreground-color);
+}
+
+QToolTip {
+	border: 1px solid $secondary-background-color;
+	background-color: $background-color;
+	color: $foreground-color;
+}
+
+QScrollBar {
+	$size: 12px;
+
+	&:horizontal {
+		max-height: $size;
+	}
+
+	&:vertical {
+		max-width: $size;
+	}
+
+	&::handle {
+		background-color: $scrollbar-handle-color;
+	}
+
+	&::add-line, &::sub-line {
+		width: 0px;
+		height: 0px;
+	}
+}
+
+QPushButton, QComboBox {
+	background-color: $button-background-color;
+}
+
+QPushButton {
+	@include button-style();
+
+	&::flat {
+		background: none;
+	}
+}
+
+QListWidget, QTreeWidget, QTextEdit {
+	background-color: $background-color;
+
+	QHeaderView {
+		background-color: $header-background-color;
+		color: $sidebar-foreground-color;
+	}
+
+	QScrollBar {
+		background-color: $background-color;
+	}
+
+	&::item {
+		min-height: 24px;
+
+		&::disabled {
+			color: $disabled-color;
+		}
+	}
+}
+
+QTabWidget {
+	&, QTabBar {
+		background-color: $header-background-color;
+	}
+}
+
+QMenu {
+	background-color: $menu-background-color;
+
+	&::separator {
+		background-color: $secondary-background-color;
+	}
+
+	&::item {
+		&::selected {
+			background-color: $menu-hover-background-color;
+		}
+
+		&::disabled {
+			color: $disabled-color;
+		}
+	}
+}
+
+QLineEdit {
+	background-color: $input-background-color;
+	color: $input-foreground-color;
+	border-radius: 4px;
+	padding: 4px;
+
+	&::disabled {
+		color: $disabled-color;
+	}
+}
+
+MainWindow {
+	background-color: $sidebar-background-color;
+
+	MainToolBar {
+		background-color: $secondary-background-color;
+		border-style: none;
+		min-height: 42px;
+
+		&::separator {
+			background-color: $secondary-background-color;
+		}
+
+		QSlider {
+			selection-background-color: $theme-color;
+
+			&::handle {
+				background-color: $slider-handle-color;
+				width: 12px;
+				height: 12px;
+				border-radius: 6px;
+			}
+		}
+
+		QToolButton {
+			border: 1px solid transparent;
+			padding: 2px;
+
+			&::hover {
+				background-color: $menu-hover-background-color;
+				border-radius: 4px;
+			}
+
+			&::checked {
+				background-color: $secondary-background-color;
+				border-bottom-color: $theme-color;
+				border-radius: 0px;
+			}
+		}
+	}
+}
+
+LeftSidePanel {
+	List::Library, List::Playlist {
+		color: $sidebar-foreground-color;
+		background-color: $sidebar-background-color;
+		@include selection-foreground($sidebar-foreground-color);
+
+		QScrollBar {
+			background-color: $sidebar-background-color;
+		}
+	}
+}
+
+Dialog::Settings {
+	background-color: $background-color;
+
+	QListWidget {
+		color: $foreground-color;
+		background-color: $sidebar-background-color;
+		@include selection-foreground($foreground-color);
+
+		&::item {
+			min-height: 32px;
+		}
+	}
+}
+
+Artist::View {
+	QToolButton {
+		&, &::menu-button {
+			@include button-style();
+		}
+	}
+}
+
+Dialog::WhatsNew {
+	background-color: $sidebar-background-color;
+}
